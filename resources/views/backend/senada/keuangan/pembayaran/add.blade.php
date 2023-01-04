@@ -80,7 +80,7 @@
                         <hr class="my-5">
                         <div class="row">
                             <div class="form-group reapeat-pay-table">
-                                <table class="table table-bordered table-responsive repeat-form-pay">
+                                <table class="table table-bordered table-responsive repeat-form-pay" id="dynamicAddRemove">
                                     <thead>
                                         <tr>
                                             <th>Jenis Transaksi</th>
@@ -95,7 +95,7 @@
                                                 <div class="form-group mb-3">
                                                     <label for="jenis_transaksi">Jenis Transaksi</label>
                                                     <select name="jenis_transaksi" class="form-control"
-                                                        id="jenis_transaksi">
+                                                        id="jenis_transaksi_0">
                                                         <option>- Pilih Jenis Transaksi -</option>
                                                         @foreach ($getJenis as $item)
                                                             <option>{{ $item->jenis_transaksi }}</option>
@@ -133,7 +133,7 @@
                                                     @enderror
                                                 </div>
                                             </td>
-                                            <td><input name="biaya" class="form-control" id="biaya" readonly></td>
+                                            <td><input name="biaya" class="form-control" id="biaya_0" readonly></td>
                                             <th><a href="javascript:void(0)" class="btn btn-sm btn-danger deleteRow">-</a></th>
                                         </tr>
                                     </tbody>
@@ -183,3 +183,119 @@
         </div>
     </div>
 @endsection
+
+@push('jsAddmultiple')
+<script type="text/javascript">
+    var i = 0;
+    $(".addRow").click(function () {
+        ++i;
+
+        fileinput = "<tr>"+
+                    "<td>"+
+                        "<div class='form-group mb-3'>"+
+                            "<select name='jenis_transaksi["+i+"]' class='form-control' id='jenis_transaksi_"+i+"'>"+
+                                "<option>- Pilih Jenis Transaksi -</option>"+
+                                "@foreach ($getJenis as $item)"+
+                                "<option>{{ $item->jenis_transaksi }}</option>"+
+                                "@endforeach"+
+                            "</select>"+
+                            "@error('jenis_transaksi')"+
+                            "<div class='alert alert-danger mt-2'>"+
+                            "{{ $message }}"+
+                            "</div>"+
+                            "@enderror"+
+                        "</div>"+
+                    "</td>"+
+                    "<td>"+
+                        "<div class='form-group mb-3'>"+
+                            "<select name='transaksi_bulan["+i+"]' class='form-control' id='transaksi_bulan'>"+
+                                "<option>- Pilih Bulan -</option>"+
+                                "<option value='1'>Januari</option>"+
+                                "<option value='2'>Februari</option>"+
+                                "<option value='3'>Maret</option>"+
+                                "<option value='4'>April</option>"+
+                                "<option value='5'>Mei</option>"+
+                                "<option value='6'>Juni</option>"+
+                                "<option value='7'>Juli</option>"+
+                                "<option value='8'>Agustus</option>"+
+                                "<option value='9'>September</option>"+
+                                "<option value='10'>Oktober</option>"+
+                                "<option value='11'>November</option>"+
+                                "<option value='12'>Desember</option>"+
+                            "</select>"+
+                            "@error('transaksi_bulan')"+
+                                "<div class='alert alert-danger mt-2'>"+
+                                "{{ $message }}"+
+                                "</div>"+
+                            "@enderror"+
+                        "</div>"+
+                    "</td>"+
+                    "<td><input name='biaya["+i+"]' class='form-control' id='biaya_"+i+"' readonly></td>"+
+                    "<th><a href='javascript:void(0)' class='btn btn-sm btn-danger remove-input-field'>-</a></th>"+
+                "</tr>"
+        $("#dynamicAddRemove").append(
+            fileinput
+            // '<tr><td><input type="text" name="addMoreInputFields[' + i +
+            // '][subject]" placeholder="Enter subject" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            );
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
+    });
+var initAwal=0;
+    $(document).ready(function () {
+        while(initAwal <= i){
+
+            $(document).on('change', 'jenis_transaksi_'+i, function() {
+var jenis_transaksi = $(this).val();
+    var div = $(this).parent();
+    var op = " ";
+
+    $.ajax({
+        type : 'get',
+        url : '{!!URL::to('keuangan/findIdJenis')!!}',
+        data : {'id':id_jenis},
+        success: function(data){
+                op += '<input name="biaya['+i+']" class="form-control" id="biaya_'+i+'" value="'+data.biaya_transaksi+'" readonly>';
+            div.find('#biaya').html(" ");
+            div.find('#biaya').append(op);
+        },
+        error:function(){
+            console.log('success');
+        },
+    });
+});
+        }
+
+});
+    </script>
+@endpush
+
+
+@push('jsAPIData')
+<script type="text/javascript">
+//     $(document).ready(function () {
+//     $(document).on('change', '#province_name', function() {
+// var jenis_transaksi = $(this).val();
+//     var div = $(this).parent();
+//     var op = " ";
+
+//     $.ajax({
+//         type : 'get',
+//         url : '{!!URL::to('keuangan/findIdJenis')!!}',
+//         data : {'id':id_jenis},
+//         success: function(data){
+//             for (var i=0; i<data.length; i++){
+//                 op += '<input name="biaya['+i+']" class="form-control" id="biaya_'+i+'" value="'+data[i].biaya_transaksi+'" readonly>';
+//             }
+//             div.find('#biaya').html(" ");
+//             div.find('#biaya').append(op);
+//         },
+//         error:function(){
+//             console.log('success');
+//         },
+//     });
+// });
+// });
+    </script>
+@endpush

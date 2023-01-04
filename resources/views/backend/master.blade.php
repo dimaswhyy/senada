@@ -153,8 +153,12 @@
     </script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 
-    {{-- Repeat Pay Table --}}
-    <script>
+@stack('jsAddmultiple')
+
+@stack('jsAPIData')
+
+    {{-- <script>
+
         $(function() {
             var table = $('.repeat-form-pay').document{
                 $('thead').on('click', '.addRow', function(){
@@ -207,7 +211,7 @@
             }
         }):
 
-    </script>
+    </script> --}}
 
     {{-- Dropdown List Auto Populate --}}
     <script type="text/javascript">
