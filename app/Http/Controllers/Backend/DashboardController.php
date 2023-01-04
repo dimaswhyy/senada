@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Unit;
+use App\Models\UnitAccount;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -26,7 +28,8 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        return view('backend.senada.dashboard.index');
+        $getUnit = Unit::all();
+        return view('backend.senada.dashboard.index', compact('getUnit'));
     }
 
 

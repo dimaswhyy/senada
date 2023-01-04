@@ -148,6 +148,8 @@ class UnitController extends Controller
     public function edit($id)
     {
         //
+        $units = Unit::find($id);
+        return view('backend.senada.yayasan.unit.edit', compact('units'));
     }
 
     /**
@@ -160,6 +162,40 @@ class UnitController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $units = Unit::findOrFail($id);
+
+        if($request->file("logo_sekolah") == ""){
+
+            $units->update([
+                'id_yayasan'     => $request->id_yayasan,
+                'nama_sekolah'     => $request->nama_sekolah,
+                'unit'     => $request->unit,
+                'alamat_sekolah'     => $request->alamat_sekolah,
+                'daerah_sekolah'     => $request->daerah_sekolah
+            ]);
+        }else{
+            Storage::disk('local')->delete('public/logo_sekolah/'.$units->logo_sekolah);
+
+            $logoSekolah = $request->file('logo_sekolah');
+            $logoSekolah->storeAs('public/logo_sekolah', $logoSekolah->hashName());
+
+            $units->update([
+                'id_yayasan'     => $request->id_yayasan,
+                'logo_sekolah'     => $logoSekolah->hashName(),
+                'nama_sekolah'     => $request->nama_sekolah,
+                'unit'     => $request->unit,
+                'alamat_sekolah'     => $request->alamat_sekolah,
+                'daerah_sekolah'     => $request->daerah_sekolah
+            ]);
+        }
+
+        if($units){
+            //redirect dengan pesan sukses
+            return redirect()->route('unit.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('unit.edit')->with(['error' => 'Data Gagal Disimpan!']);
+        }
     }
 
     /**
@@ -171,5 +207,18 @@ class UnitController extends Controller
     public function destroy($id)
     {
         //
+        $units = Unit::findOrFail($id);
+        if($units->logo_sekolah!="null"){
+            Storage::disk('local')->delete('public/logo_sekolah'.$units->logo_sekolah);
+        }
+        $units->delete();
+
+        if($units){
+            //redirect dengan pesan sukses
+        return redirect()->route('unit.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }else{
+            //redirect dengan pesan error
+        return redirect()->route('unit.edit')->with(['error' => 'Data Gagal Dihapus!']);
+        }
     }
 }

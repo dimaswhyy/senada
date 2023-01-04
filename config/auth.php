@@ -50,6 +50,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'unit_account' => [
+            'driver' => 'session',
+            'provider' => 'unit_accounts',
+        ],
+
     ],
 
     /*
@@ -78,6 +84,11 @@ return [
         'account_yayasans' => [
             'driver' => 'eloquent',
             'model' => App\Models\Account_Yayasan::class,
+        ],
+
+        'unit_accounts' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\UnitAccount::class,
         ],
 
         // 'users' => [

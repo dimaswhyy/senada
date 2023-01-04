@@ -1,10 +1,10 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="index.html" class="app-brand-link">
+      <a href="{{route('dashboard.index')}}" class="app-brand-link">
         <span class="app-brand-logo demo">
             <img src="{{asset('assets/backend/img/logo/logo.png')}}" width="40" height="40" alt="">
         </span>
-        <span class="app-brand-text demo menu-text text-uppercase fw-bolder ms-2">senada</span>
+        <span class="app-brand-text demo menu-text text-uppercase fw-bolder ms-2">Senada</span>
       </a>
 
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -23,6 +23,8 @@
         </a>
       </li>
       {{-- Super Admin --}}
+      @if (Str::length(Auth::guard('account_yayasan')->user()) > 0)
+      @if (Auth::guard('account_yayasan')->user()->role_id == 1)
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Yayasan</span>
       </li>
@@ -43,19 +45,23 @@
               <div data-i18n="Account">Unit</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
+          <li class="menu-item {{Request::is('unitaccount')?'active':''}}">
+            <a href="{{route('unitaccount.index')}}" class="menu-link">
               <div data-i18n="Notifications">Akun</div>
             </a>
           </li>
         </ul>
       </li>
+      @endif
+      @endif
       {{-- Administrasi --}}
+      @if (Str::length(Auth::guard('unit_account')->user()) > 0)
+      @if (Auth::guard('unit_account')->user()->role_id == 2)
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Administrator</span>
       </li>
-      <li class="menu-item">
-        <a href="index.html" class="menu-link">
+      <li class="menu-item {{Request::is('profilsekolah')?'active':''}}">
+        <a href="{{route('profilsekolah.index')}}" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-school"></i>
           <div data-i18n="Analytics">Profil Sekolah</div>
         </a>
@@ -66,36 +72,50 @@
           <div data-i18n="Account Settings">Kelola</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="pages-account-settings-account.html" class="menu-link">
+          <li class="menu-item {{Request::is('guru')?'active':''}}">
+            <a href="{{route('guru.index')}}" class="menu-link">
               <div data-i18n="Account">Data Guru</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="pages-account-settings-notifications.html" class="menu-link">
+          <li class="menu-item {{Request::is('siswa')?'active':''}}">
+            <a href="{{route('siswa.index')}}" class="menu-link">
               <div data-i18n="Notifications">Data Siswa</div>
+            </a>
+          </li>
+          <li class="menu-item {{Request::is('mapping')?'active':''}}">
+            <a href="{{route('mapping.index')}}" class="menu-link">
+              <div data-i18n="Notifications">Mapping Kelas</div>
             </a>
           </li>
         </ul>
       </li>
+      @endif
+      @endif
       {{-- Keuangan --}}
+      @if (Str::length(Auth::guard('unit_account')->user()) > 0)
+      @if (Auth::guard('unit_account')->user()->role_id == 3)
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Keuangan</span>
       </li>
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-wallet-alt"></i>
-          <div data-i18n="Account Settings">Pembayaran</div>
+          <div data-i18n="Account Settings">Transaksi</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="pages-account-settings-account.html" class="menu-link">
-              <div data-i18n="Account">SPP</div>
+          <li class="menu-item {{Request::is('jenistransaksi')?'active':''}}">
+            <a href="{{route('jenistransaksi.index')}}" class="menu-link">
+              <div data-i18n="Account">Jenis Transaksi</div>
+            </a>
+          </li>
+          <li class="menu-item {{Request::is('pembayaran')?'active':''}}">
+            <a href="{{route('pembayaran.index')}}" class="menu-link">
+              <div data-i18n="Account">Pembayaran</div>
             </a>
           </li>
           <li class="menu-item">
             <a href="pages-account-settings-notifications.html" class="menu-link">
-              <div data-i18n="Notifications">Lain-lain</div>
+              <div data-i18n="Notifications">Tagihan</div>
             </a>
           </li>
         </ul>
@@ -112,9 +132,12 @@
           <div data-i18n="Analytics">Laporan</div>
         </a>
       </li>
+      @endif
+      @endif
 
-      {{-- @if (Auth::user()->role_id == 6) --}}
       <!-- Siswa -->
+      @if (Str::length(Auth::guard('user')->user()) > 0)
+      @if (Auth::guard('user')->user()->role_id == 6)
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Siswa</span></li>
       <!-- Profil -->
       <li class="menu-item">
@@ -241,60 +264,7 @@
           </li>
         </ul>
       </li> --}}
-
-      <!-- Extended components -->
-      {{-- <li class="menu-item">
-        <a href="javascript:void(0)" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-copy"></i>
-          <div data-i18n="Extended UI">Extended UI</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-              <div data-i18n="Perfect Scrollbar">Perfect scrollbar</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="extended-ui-text-divider.html" class="menu-link">
-              <div data-i18n="Text Divider">Text Divider</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <li class="menu-item">
-        <a href="icons-boxicons.html" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-crown"></i>
-          <div data-i18n="Boxicons">Boxicons</div>
-        </a>
-      </li> --}}
-      {{-- @endif --}}
-
-      <!-- Tata Usaha -->
-      <li class="menu-header small text-uppercase"><span class="menu-header-text">Tata Usaha</span></li>
-      <!-- Forms -->
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-detail"></i>
-          <div data-i18n="Form Elements">Data</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="forms-basic-inputs.html" class="menu-link">
-              <div data-i18n="Basic Inputs">Profil Sekolah</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="forms-input-groups.html" class="menu-link">
-              <div data-i18n="Input groups">Data Guru</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="forms-input-groups.html" class="menu-link">
-              <div data-i18n="Input groups">Data Siswa</div>
-            </a>
-          </li>
-        </ul>
-       </li>
+      @endif
+      @endif
     </ul>
   </aside>

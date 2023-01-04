@@ -62,6 +62,10 @@ class LoginController extends Controller
 
         }elseif(Auth::guard('user')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
             return redirect('/dashboard');
+
+        }elseif(Auth::guard('unit_account')->attempt(array('email' => $input['email'], 'password' => $input['password']))){
+            return redirect('/dashboard');
+
         }else{
             return redirect()->route('login')
                 ->with('error','Email dan Kata Sandi yang Anda Masukkan Salah!');

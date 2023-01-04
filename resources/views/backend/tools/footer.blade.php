@@ -5,7 +5,7 @@
             <script>
                 document.write(new Date().getFullYear());
             </script>
-            , made with Zenith. by
+            , made with Team IT Al Manar.
             <a href="https://almanar.sch.id" target="_blank" class="footer-link fw-bolder">Sistem Infromasi Akademik Pendidikan Al Manar</a>
             1.0
         </div>

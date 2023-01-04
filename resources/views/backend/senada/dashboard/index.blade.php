@@ -8,15 +8,54 @@
                         <div class="card-body">
                             <h5 class="card-title text-primary">Selamat Beraktifitas Sekolah Hebat! 🎉</h5>
                             <p class="mb-4">
-                                You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-                                your profile.
+                                Assalamu'alaikum Wr. Wb.
+                                @if (auth()->user()->jenis_kelamin == 'Laki-laki')
+                                    <span>Ustadz</span>
+                                @else
+                                    <span>Ustadzah</span>
+                                @endif
+                                <span class="fw-bold">{{ auth()->user()->name }}</span> anda memiiki
+                                akses sebagai
+                                @if (auth()->user()->role_id == 1)
+                                    <span class="fw-bold">Yayasan</span>
+                                @elseif(auth()->user()->role_id == 2)
+                                    <span class="fw-bold">Tata Usaha</span>
+                                @elseif(auth()->user()->role_id == 3)
+                                    <span class="fw-bold">Keuangan</span>
+                                @elseif(auth()->user()->role_id == 4)
+                                    <span class="fw-bold">Perpustakaan</span>
+                                @elseif(auth()->user()->role_id == 5)
+                                    <span class="fw-bold">Guru</span>
+                                @else
+                                    <span class="fw-bold">Siswa</span>
+                                @endif
+                                pada
+                                @foreach ($getUnit as $item)
+                                    @if (auth()->user()->id_unit == $item->id)
+                                        <span class="fw-bold">{{ $item->nama_sekolah }} - </span>
+                                    @else
+                                        <span></span>
+                                    @endif
+                                    @if (auth()->user()->id_unit == $item->id)
+                                        <span class="fw-bold">{{ $item->daerah_sekolah }}</span>
+                                    @else
+                                        <span></span>
+                                    @endif
+                                @endforeach
+                                .<br>Semoga Allah SWT mudahkan dan lancarkan segala
+                                urusan kita. <br><i>Aamiin Allahumma Aamiin</i>
                             </p>
                         </div>
                     </div>
                     <div class="col-sm-5 text-center text-sm-left">
                         <div class="card-body pb-0 px-0 px-md-4">
-                            <img src="{{ asset('assets/backend/img/illustrations/woman.png') }}" height="140"
-                                alt="View Badge User">
+                            @if (auth()->user()->jenis_kelamin == 'Laki-laki')
+                                <img src="{{ asset('assets/backend/img/illustrations/man.png') }}" height="140"
+                                    alt="View Badge User Man">
+                            @else
+                                <img src="{{ asset('assets/backend/img/illustrations/woman.png') }}" height="140"
+                                    alt="View Badge User Woman">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -53,6 +92,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-3 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -67,6 +107,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-3 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -100,6 +141,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-3 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -114,6 +156,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-3 mb-4">
                     <div class="card">
                         <div class="card-body">
