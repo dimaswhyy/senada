@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/kelas/byIdRombel/{id}',[App\Http\Controllers\Backend\Keuangan\PembayaranController::class, 'getClassList']);
+Route::get('/jenis/byIdRombel/{id}',[App\Http\Controllers\Backend\Keuangan\PembayaranController::class, 'getJenisTransaksiList']);
+Route::get('/siswa/byIdRombel/{id}',[App\Http\Controllers\Backend\Keuangan\PembayaranController::class, 'getSiswaList']);

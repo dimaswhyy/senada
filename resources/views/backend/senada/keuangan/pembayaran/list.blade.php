@@ -18,9 +18,9 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Siswa</th>
-                                <th>Jenis</th>
-                                <th>Tanggal</th>
-                                <th>Deskripsi</th>
+                                <th>Kelas</th>
+                                <th>Transaksi</th>
+                                <th>Bulan</th>
                                 <th>Keterangan</th>
                                 <th>Aksi</th>
                             </tr>

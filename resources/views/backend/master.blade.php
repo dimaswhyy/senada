@@ -75,6 +75,7 @@
   </head>
 
   <body>
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -213,37 +214,7 @@
 
     </script> --}}
 
-    {{-- Dropdown List Auto Populate --}}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            /*------------------------------------------
-                  --------------------------------------------
-                  Country Dropdown Change Event
-                  --------------------------------------------
-                  --------------------------------------------*/
-            $('#pilihan_kelas').on('change', function() {
-                var id = this.value;
-                $("#pilihan_siswa").html('');
-                $.ajax({
-                    url: "{{ url('api/siswa') }}",
-                    type: "POST",
-                    data: {
-                        id_kelas: idKelas,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        $('#pilihan_siswa').html(
-                            '<option>- Pilih Siswa</option>');
-                        $.each(result.name, function(key, value) {
-                            $("#pilihan_siswa").append('<option value="' + value
-                                .id_siswa + '">' + value.name + '</option>');
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+
 
     <!-- DT Yayasan -->
     <script type="text/javascript">
@@ -637,7 +608,7 @@
 
             // Datatable Pembayaran
             var table = $('.data-table-pembayaran').DataTable({
-                processing: true,
+                processing: false,
                 serverSide: true,
                 ajax: {
                     url: "{{ route('pembayaran.index') }}",
@@ -651,30 +622,68 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'nama_siswa',
-                        name: 'nama_siswa'
+                        data: 'name',
+                        name: 'siswas.name'
                     },
                     {
-                        data: 'jenis',
-                        name: 'jenis'
+                        data: 'kelas',
+                        name: 'mappings.kelas'
                     },
                     {
-                        data: 'tanggal_transaksi',
-                        name: 'tanggal_transaksi'
+                        data: 'jenis_transaksi',
+                        name: 'jenis_transaksi'
                     },
                     {
-                        data: 'deskripsi',
-                        name: 'deskripsi'
+                        data: 'bulan_transaksi',
+                        name: 'bulan_transaksi',
+                        render: function(data, type, row, meta) {
+                            if (data == '1') {
+                                console.log(data);
+                                return 'Januari';
+                            } if (data == '2') {
+                                console.log(data);
+                                return 'Februari';
+                            } if (data == '3') {
+                                console.log(data);
+                                return 'Maret';
+                            } if (data == '4') {
+                                console.log(data);
+                                return 'April';
+                            } if (data == '5') {
+                                console.log(data);
+                                return 'Mei';
+                            } if (data == '6') {
+                                console.log(data);
+                                return 'Juni';
+                            } if (data == '7') {
+                                console.log(data);
+                                return 'Juli';
+                            } if (data == '8') {
+                                console.log(data);
+                                return 'Agustus';
+                            } if (data == '9') {
+                                console.log(data);
+                                return 'September';
+                            } if (data == '10') {
+                                console.log(data);
+                                return 'Oktober';
+                            } if (data == '11') {
+                                console.log(data);
+                                return 'November';
+                            }else {
+                                return 'Desember';
+                            }
+                        }
                     },
                     {
                         data: 'keterangan',
                         name: 'keterangan',
                         render: function(data, type, row, meta) {
-                            if (data == 'Lunas') {
+                            if (data == 'Tunai') {
                                 console.log(data);
-                                return '<span class="badge bg-label-success me-1">Lunas</span>';
+                                return '<span class="badge bg-label-success me-1">Tunai</span>';
                             } else {
-                                return '<span class="badge bg-label-warning me-1">Belum Lunas</span>';
+                                return '<span class="badge bg-label-info me-1">Transfer</span>';
                             }
                         }
                     },
@@ -765,5 +774,6 @@
 
         });
     </script>
+    @include('sweetalert::alert')
   </body>
 </html>

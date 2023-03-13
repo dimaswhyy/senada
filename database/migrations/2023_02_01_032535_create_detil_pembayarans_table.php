@@ -13,19 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pembayarans', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('id_unit');
-            $table->string('id_unit_account');
-            $table->string('id_kelas');
-            $table->string('id_siswa');
-            $table->date('tanggal_transaksi');
+        Schema::create('detil_pembayarans', function (Blueprint $table) {
+            $table->id();
             $table->string('no_transaksi');
             $table->string('jenis_transaksi');
+            $table->string('bulan_transaksi');
+            $table->string('biaya_transaksi');
             $table->string('total_transaksi');
-            $table->string('deskripsi_transaksi');
-            $table->string('keterangan');
-            $table->longText('bukti_transfer');
             $table->timestamps();
         });
     }
@@ -37,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pembayarans');
+        Schema::dropIfExists('detil_pembayarans');
     }
 };

@@ -56,10 +56,12 @@ Route::middleware('auth:unit_account')->group(function(){
     Route::resource('mapping', MappingController::class);
     Route::resource('kelas', KelolaKelasController::class);
     Route::resource('rombel', RombonganBelajarController::class);
+
     //Keuangan
     Route::resource('pembayaran', PembayaranController::class);
-    Route::post('api/siswa', [PembayaranController::class, 'fetchSiswa']); //Belum Berhasil
-    Route::get('/findIdJenis', [App\Http\Controllers\Backend\Keuangan\APIDataPembayaranController::class, 'finIdJenis'])->name('APIDataPembayaran.finIdJenis');
+    Route::post('pembayaran/fetch', 'PembayaranController@fetch')->name('pembayaran.fetch'); //Belum Berhasil
+    // Route::get('siswa/{id_kelas}', 'PembayaranController@fetch');
+    // Route::get('/findIdJenis', [App\Http\Controllers\Backend\Keuangan\APIDataPembayaranController::class, 'finIdJenis'])->name('APIDataPembayaran.finIdJenis');
     Route::resource('jenistransaksi', JenisTransaksiController::class);
 
 });
