@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SiswaImport;
+use App\Exports\SiswaExport;
 
 class SiswaController extends Controller
 {
@@ -502,5 +505,17 @@ class SiswaController extends Controller
             //redirect dengan pesan error
         return redirect()->route('siswa.edit')->with(['error' => 'Data Gagal Dihapus!']);
         }
+    }
+
+    public function import()
+    {
+        Excel::import(new SiswaImport, request()->file('file'));
+
+        return back();
+    }
+
+    public function export()
+    {
+        return Excel::download(new SiswaExport, 'siswa.xlsx');
     }
 }
