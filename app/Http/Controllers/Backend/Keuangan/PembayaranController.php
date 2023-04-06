@@ -57,6 +57,8 @@ class PembayaranController extends Controller
                         $dropBtn ='<div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
+                          <a class="dropdown-item" href='.route("pembayaran.invoice", $row->id).'><i class="bx bx-printer me-1"></i> Cetak</a>
+                          <a class="dropdown-item" href='.route("pembayaran.show", $row->id).'><i class="bx bx-printer me-1"></i> Lihat</a>
                           <a class="dropdown-item" href='.route("pembayaran.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
                           <form action="' . route('pembayaran.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Apakah anda yakin ingin menghapus data ini ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
@@ -95,6 +97,8 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {
         //
+        date_default_timezone_set('Asia/Jakarta');
+
         $idUnit = $request->id_unit;
         $Units = Unit::find($idUnit);
         $nameUNT="";
@@ -120,35 +124,51 @@ class PembayaranController extends Controller
         }else{
             $nameREG = 'JKT';
         }
-        $tanggal = date('ymd');
+        $tahun = date('y');
+        $tanggal = date('md');
+        // dd($tanggal);
         $no = "0000";
-        $id = Pembayaran::max('id');
-        if($id == null){
-            $notransaksi = $nameUNT . "-" . $nameREG . $tanggal . "0001";
-
-        }else{
-            // dd("masuk");
-            // dd($notransaksi);
-            $dataterakhir = Pembayaran::where('id',$id)->first();
-            $nourut = $dataterakhir->no_transaksi;
-            // dd($nourut);
-            $cektanggal = substr($nourut, 6, 6);
-            $hasil_urut = $tanggal . $no;
-            // dd($nourut);
-            // dd("hasil urut : ",$hasil_urut," cek tanggal : ",$cektanggal," Tanggal :",$tanggal);
-            if ($tanggal == $cektanggal) {
-                $no_urut = substr($nourut, 6, 10);
-                $no_urut_int = (int)$no_urut;
-                // dd($no_urut_int);
-                $hasil = $no_urut_int + 1;
-                // dd($hasil);
-            } else {
-                $hasil = $hasil_urut + 1;
+        $nt = Pembayaran::max('no_transaksi');
+        $dataterakhir = Pembayaran::where('no_transaksi',$nt)->first();
+        $nourut = $dataterakhir->no_transaksi ?? null;
+        $SklhReg = $nameUNT . "-" . $nameREG;
+        $cekSklhReg = substr($nourut, 0, 6);
+        $hasil_urut = $tahun . $tanggal . $no;
+        if($nourut == null){
+            if($SklhReg == $cekSklhReg){
+                $hasil = $hasil_urut+1;
+            }else{
+                $hasil = $hasil_urut+1;
             }
             // dd($hasil);
-            $notransaksi = $nameUNT . "-" . $nameREG . $hasil;
+        }else{
+            if($SklhReg == $cekSklhReg){
+                $no_urut = substr($nourut, 6, 10);
+
+            // $no_urut_int = (int)$no_urut;
+            // dd($no_urut_int);
+                $hasil_urut = $no_urut + 1;
+                $hasil = $hasil_urut;
+            }else{
+                $hasil = $hasil_urut+1;
+            }
         }
-        // dd($notransaksi);
+        // dd($tanggal);
+        $notransaksi = $nameUNT . "-" . $nameREG . $hasil;
+        dd($notransaksi);
+
+        // $cekReg = substr($nourut, 3, 3);
+        //     $reg = $nameREG;
+            // $hasil_urut = $tanggal . $no;
+            // if ($reg == $cekReg) {
+            //     $no_urut = substr($nourut, 6, 10);
+            //     $no_urut_int = (int)$no_urut;
+            //     $hasil = $no_urut_int + 1;
+            // } else {
+                // $hasil = $hasil_urut + 1;
+            // }
+            // dd($hasil);
+
 
         $dataJT = $request->jenis_transaksi;
         $dataBT = $request->transaksi_bulan;
@@ -172,6 +192,7 @@ class PembayaranController extends Controller
                 'keterangan' => $request->keterangan,
                 'bukti_transfer'     => null
             ]);
+            // dd($pembayarans);
         }
 
 
@@ -223,10 +244,8 @@ class PembayaranController extends Controller
 
         if($pembayarans){
             //redirect dengan pesan sukses
-            return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Disimpan!'])
-            ->question('Are you sure?','You won\'t be able to revert this!')
-            ->showConfirmButton('Yes! Delete it', '#3085d6')
-            ->showCancelButton('Cancel', '#aaa')->reverseButtons();;
+            return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Disimpan!']);
+
         }else{
             //redirect dengan pesan error
             return redirect()->route('pembayaran.add')->with(['error' => 'Data Gagal Disimpan!']);
@@ -242,6 +261,7 @@ class PembayaranController extends Controller
     public function show($id)
     {
         //
+        // return view('backend.senada.keuangan.invoice_pembayaran.invoice');
     }
 
     /**
@@ -312,5 +332,11 @@ class PembayaranController extends Controller
     {
         $listJenis = JenisTransaksi::where('id_rombel',$id)->get();
         return response()->json($listJenis);
+    }
+
+    public function invoice($id)
+    {
+        $pembayaran = Pembayaran::findOrFail($id);
+        return view('backend.senada.keuangan.invoice_pembayaran.invoice', compact('pembayaran'));
     }
 }

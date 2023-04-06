@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="name">Nama Lengkap</label>
+                            <label for="name">Nama Lengkap*</label>
                             <input name="name" class="form-control" id="name" placeholder="Masukkan Nama Lengkap">
                             @error('name')
                                 <div class="alert alert-danger mt-2">
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="tanggal_lahir">Tanggal Lahir</label>
+                            <label for="tanggal_lahir">Tanggal Lahir*</label>
                             <input name="tanggal_lahir" class="form-control" type="date" value="1999-11-17" id="tanggal_lahir" />
                             @error('tanggal_lahir')
                                 <div class="alert alert-danger mt-2">
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="email">Email</label>
+                            <label for="email">Email*</label>
                             <input name="email" class="form-control" id="email"
                                 placeholder="Masukkan Email">
                             @error('email')
@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="form-group mb-5">
-                            <label for="password">Kata Sandi</label>
+                            <label for="password">Kata Sandi*</label>
                             <input name="password" class="form-control" id="password"
                                 placeholder="Masukkan Kata Sandi">
                             @error('password')
@@ -74,7 +74,7 @@
                         <h5 class="card-sub-header">Biodata Guru</h5>
 
                         <div class="form-group mb-3">
-                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                            <label for="jenis_kelamin">Jenis Kelamin*</label>
                             <select name="jenis_kelamin" class="form-control" id="jenis_kelamin">
                                 <option>- Pilih -</option>
                                 <option>Laki-laki</option>
@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="nip">Nomor Induk Pegawai</label>
+                            <label for="nip">Nomor Induk Pegawai*</label>
                             <input name="nip" class="form-control" id="nip"
                                 placeholder="Masukkan Nomor Induk Pegawai">
                             @error('nip')
@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="niy">Nomor Induk Yayasan</label>
+                            <label for="niy">Nomor Induk Yayasan*</label>
                             <input name="niy" class="form-control" id="niy"
                                 placeholder="Masukkan Nomor Induk Yayasan">
                             @error('niy')
@@ -220,7 +220,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="tempat_lahir">Tempat Lahir</label>
+                            <label for="tempat_lahir">Tempat Lahir*</label>
                             <input name="tempat_lahir" class="form-control" id="tempat_lahir"
                                 placeholder="Masukkan Tempat Lahir">
                             @error('tempat_lahir')
@@ -261,7 +261,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="keterangan">Keterangan</label>
+                            <label for="keterangan">Keterangan*</label>
                             <select name="keterangan" class="form-control" id="keterangan">
                                 <option>- Pilih -</option>
                                 <option>Aktif</option>

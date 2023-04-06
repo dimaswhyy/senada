@@ -60,9 +60,8 @@ Route::middleware('auth:unit_account')->group(function(){
     //Keuangan
     Route::resource('pembayaran', PembayaranController::class);
     Route::post('pembayaran/fetch', 'PembayaranController@fetch')->name('pembayaran.fetch'); //Belum Berhasil
-    // Route::get('siswa/{id_kelas}', 'PembayaranController@fetch');
-    // Route::get('/findIdJenis', [App\Http\Controllers\Backend\Keuangan\APIDataPembayaranController::class, 'finIdJenis'])->name('APIDataPembayaran.finIdJenis');
     Route::resource('jenistransaksi', JenisTransaksiController::class);
+    Route::get('pembayaran/invoice/{id}', [PembayaranController::class, 'invoice'])->name('pembayaran.invoice');
 
 });
 
