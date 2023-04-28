@@ -26,6 +26,7 @@ class Pembayaran extends Model
         'no_transaksi',
         'jenis_transaksi',
         'bulan_transaksi',
+        'tahun_transaksi',
         'biaya_transaksi',
         'total_transaksi',
         'keterangan',

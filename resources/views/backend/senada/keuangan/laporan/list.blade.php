@@ -1,29 +1,30 @@
 @extends('backend.master')
 @section('content')
     <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Dashboard / Pembayaran /</span> Pembayaran
+        <span class="text-muted fw-light">Dashboard /</span> Laporan
     </h4>
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
         <div class="card-header">
-            <h5>Pembayaran</h5>
+            <h5>Laporan</h5>
 
-            <a href="{{route('pembayaran.create')}}" class="btn btn-sm btn-primary">Tambah Pembayaran</a>
+            <a href="#" class="btn btn-sm btn-primary">Buat Laporan</a>
+            <a href="#" class="btn btn-sm btn-primary">Upload Laporan</a>
 
             <div class="card-datatable table">
                 <div class="card-datatable table-responsive text-nowrap">
-                    <table class="dt-scrollableTable table data-table-pembayaran">
+                    <table class="dt-scrollableTable table data-table-laporan">
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>No Transaksi</th>
                                 <th>Nama Siswa</th>
                                 <th>Kelas</th>
-                                <th>Transaksi</th>
+                                <th>Jenis</th>
                                 <th>Bulan</th>
                                 <th>Tahun</th>
                                 <th>Keterangan</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                     </table>

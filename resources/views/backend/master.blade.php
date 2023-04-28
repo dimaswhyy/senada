@@ -158,6 +158,8 @@
 
 @stack('jsAPIData')
 
+@stack('jsPopUpCetak')
+
     {{-- <script>
 
         $(function() {
@@ -673,7 +675,11 @@
                             }else {
                                 return 'Desember';
                             }
-                        }
+                        },
+                    },
+                    {
+                        data: 'tahun_transaksi',
+                        name: 'tahun_transaksi'
                     },
                     {
                         data: 'keterangan',

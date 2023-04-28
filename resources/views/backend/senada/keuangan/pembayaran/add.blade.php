@@ -237,7 +237,7 @@
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();
     });
-//
+
 
 function getSelectedOptionAttribute(select, attribute) {
     var selectedOption = select.options[select.selectedIndex];

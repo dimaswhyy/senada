@@ -3,6 +3,8 @@
 use App\Http\Controllers\Backend\Keuangan\JenisTransaksiController;
 use App\Http\Controllers\Backend\Keuangan\PembayaranController;
 use App\Http\Controllers\Backend\Keuangan\SppController;
+use App\Http\Controllers\Backend\Keuangan\TagihanController;
+use App\Http\Controllers\Backend\Keuangan\LaporanController;
 use App\Http\Controllers\Backend\TataUsaha\GuruController;
 use App\Http\Controllers\Backend\TataUsaha\KelolaKelasController;
 use App\Http\Controllers\Backend\TataUsaha\MappingController;
@@ -62,7 +64,8 @@ Route::middleware('auth:unit_account')->group(function(){
     Route::post('pembayaran/fetch', 'PembayaranController@fetch')->name('pembayaran.fetch'); //Belum Berhasil
     Route::resource('jenistransaksi', JenisTransaksiController::class);
     Route::get('pembayaran/invoice/{id}', [PembayaranController::class, 'invoice'])->name('pembayaran.invoice');
-
+    Route::resource('tagihan', TagihanController::class);
+    Route::resource('laporan', LaporanController::class);
 });
 
 Route::middleware('auth:unit_account', 'role_id=3')->group(function(){

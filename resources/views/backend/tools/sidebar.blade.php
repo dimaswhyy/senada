@@ -33,7 +33,7 @@
           <i class="menu-icon tf-icons bx bxs-school"></i>
           <div data-i18n="Analytics">Profil Yayasan</div>
         </a>
-      </li> 
+      </li>
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bxs-data"></i>
@@ -113,9 +113,27 @@
               <div data-i18n="Account">Pembayaran</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="pages-account-settings-notifications.html" class="menu-link">
-              <div data-i18n="Notifications">Tagihan</div>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dollar"></i>
+          <div data-i18n="Account Settings">Tagihan</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item {{Request::is('spp')?'active':''}}">
+            <a href="" class="menu-link">
+              <div data-i18n="Account">SPP</div>
+            </a>
+          </li>
+          <li class="menu-item {{Request::is('ekskul')?'active':''}}">
+            <a href="" class="menu-link">
+              <div data-i18n="Account">Ekskul</div>
+            </a>
+          </li>
+          <li class="menu-item {{Request::is('cathering')?'active':''}}">
+            <a href="" class="menu-link">
+              <div data-i18n="Notifications">Cathering</div>
             </a>
           </li>
         </ul>
@@ -126,8 +144,8 @@
           <div data-i18n="Analytics">Piutang</div>
         </a>
       </li>
-      <li class="menu-item">
-        <a href="index.html" class="menu-link">
+      <li class="menu-item {{Request::is('laporan')?'active':''}}">
+        <a href="{{route('laporan.index')}}" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-report"></i>
           <div data-i18n="Analytics">Laporan</div>
         </a>

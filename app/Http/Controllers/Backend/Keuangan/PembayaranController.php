@@ -28,7 +28,7 @@ class PembayaranController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = Pembayaran::where('pembayarans.id_unit','=',Auth::User()->id_unit)->leftjoin('siswas', 'pembayarans.id_siswa', '=', 'siswas.id')->leftjoin('mappings', 'pembayarans.id_kelas', '=', 'mappings.id')->select('pembayarans.id', 'siswas.name', 'mappings.kelas', 'pembayarans.tanggal_transaksi', 'pembayarans.jenis_transaksi', 'pembayarans.bulan_transaksi', 'pembayarans.keterangan', 'pembayarans.*', 'pembayarans.created_at')->latest()->get();
+            $data = Pembayaran::where('pembayarans.id_unit','=',Auth::User()->id_unit)->leftjoin('siswas', 'pembayarans.id_siswa', '=', 'siswas.id')->leftjoin('mappings', 'pembayarans.id_kelas', '=', 'mappings.id')->select('pembayarans.id', 'siswas.name', 'mappings.kelas', 'pembayarans.tanggal_transaksi', 'pembayarans.jenis_transaksi', 'pembayarans.bulan_transaksi', 'pembayarans.tahun_transaksi', 'pembayarans.keterangan', 'pembayarans.*', 'pembayarans.created_at')->latest()->get();
 
 
             return datatables::of($data)
@@ -58,8 +58,6 @@ class PembayaranController extends Controller
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href='.route("pembayaran.invoice", $row->id).'><i class="bx bx-printer me-1"></i> Cetak</a>
-                          <a class="dropdown-item" href='.route("pembayaran.show", $row->id).'><i class="bx bx-printer me-1"></i> Lihat</a>
-                          <a class="dropdown-item" href='.route("pembayaran.edit", $row->id).'><i class="bx bx-edit-alt me-1"></i> Ubah</a>
                           <form action="' . route('pembayaran.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Apakah anda yakin ingin menghapus data ini ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
                         </div>';
@@ -124,56 +122,56 @@ class PembayaranController extends Controller
         }else{
             $nameREG = 'JKT';
         }
-        $tahun = date('y');
-        $tanggal = date('md');
-        // dd($tanggal);
-        $no = "0000";
-        $nt = Pembayaran::max('no_transaksi');
-        $dataterakhir = Pembayaran::where('no_transaksi',$nt)->first();
-        $nourut = $dataterakhir->no_transaksi ?? null;
-        $SklhReg = $nameUNT . "-" . $nameREG;
-        $cekSklhReg = substr($nourut, 0, 6);
-        $hasil_urut = $tahun . $tanggal . $no;
-        if($nourut == null){
-            if($SklhReg == $cekSklhReg){
-                $hasil = $hasil_urut+1;
-            }else{
-                $hasil = $hasil_urut+1;
-            }
-            // dd($hasil);
+        $tanggal = date('ymd');
+        // $no = 0000;
+        $pembayaran = Pembayaran::where('id_unit', $idUnit)->max('no_transaksi');
+        if($pembayaran){
+            $nourut = substr($pembayaran,6,14) + 1;
+            $no_urut_str = substr($nourut,6,10);
+            $no_urut = $nameUNT . "-" . $nameREG . $tanggal . $no_urut_str;
+            $hasil = $no_urut;
         }else{
-            if($SklhReg == $cekSklhReg){
-                $no_urut = substr($nourut, 6, 10);
-
-            // $no_urut_int = (int)$no_urut;
-            // dd($no_urut_int);
-                $hasil_urut = $no_urut + 1;
-                $hasil = $hasil_urut;
-            }else{
-                $hasil = $hasil_urut+1;
-            }
+            $nourut = $nameUNT . "-" . $nameREG . $tanggal . 0001;
+            $hasil = $nourut;
         }
+        $notransaksi = $hasil;
+        // dd($hasil);
+        // ----------------Logic Sebelumnya----------------
+        // $nt = Pembayaran::max('no_transaksi');
+        // $dataterakhir = Pembayaran::where('no_transaksi',$nt)->first();
+        // $nourut = $dataterakhir->no_transaksi ?? null;
+        // $SklhReg = $nameUNT . "-" . $nameREG;
+        // $cekSklhReg = substr($nourut, 0, 6);
+        // $hasil_urut = $tahun . $tanggal . $no;
+        // if($nourut == null){
+        //     if($SklhReg == $cekSklhReg){
+        //         $hasil = $hasil_urut+1;
+        //     }else{
+        //         $hasil = $hasil_urut+1;
+        //     }
+        //     // dd($hasil);
+        // }else{
+        //     if($SklhReg == $cekSklhReg){
+        //         $no_urut = substr($nourut, 6, 10);
+        //         $hasil_urut = $no_urut + 1;
+        //         $hasil = $hasil_urut;
+        //     }else{
+        //         $hasil = $hasil_urut+1;
+        //     }
+        // }
         // dd($tanggal);
-        $notransaksi = $nameUNT . "-" . $nameREG . $hasil;
-        dd($notransaksi);
+        // ----------------Logic Sebelumnya----------------
+        // $notransaksi = $nameUNT . "-" . $nameREG . $hasil;
+        // dd($notransaksi);
 
-        // $cekReg = substr($nourut, 3, 3);
-        //     $reg = $nameREG;
-            // $hasil_urut = $tanggal . $no;
-            // if ($reg == $cekReg) {
-            //     $no_urut = substr($nourut, 6, 10);
-            //     $no_urut_int = (int)$no_urut;
-            //     $hasil = $no_urut_int + 1;
-            // } else {
-                // $hasil = $hasil_urut + 1;
-            // }
-            // dd($hasil);
+
 
 
         $dataJT = $request->jenis_transaksi;
         $dataBT = $request->transaksi_bulan;
         $dataBiT = $request->biaya;
         $total = count($dataJT);
+        $tahunTrans = date('Y');
 
         for ($i=1; $i<=$total; $i++){
             $pembayarans = Pembayaran::create([
@@ -187,6 +185,7 @@ class PembayaranController extends Controller
                 'no_transaksi' => $notransaksi,
                 'jenis_transaksi' => $dataJT[$i],
                 'bulan_transaksi' => $dataBT[$i],
+                'tahun_transaksi' => $tahunTrans,
                 'biaya_transaksi' => $dataBiT[$i],
                 'total_transaksi' => $request->total,
                 'keterangan' => $request->keterangan,
@@ -296,7 +295,16 @@ class PembayaranController extends Controller
     public function destroy($id)
     {
         //
+        $pembayarans = Pembayaran::findOrFail($id);
 
+        $pembayarans->delete();
+        if($pembayarans){
+            //redirect dengan pesan sukses
+        return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }else{
+            //redirect dengan pesan error
+        return redirect()->route('pembayaran.edit')->with(['error' => 'Data Gagal Dihapus!']);
+        }
     }
 
     public function fetch(Request $request)
