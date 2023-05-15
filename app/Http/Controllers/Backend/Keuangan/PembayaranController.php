@@ -57,7 +57,7 @@ class PembayaranController extends Controller
                         $dropBtn ='<div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href='.route("pembayaran.invoice", $row->id).'><i class="bx bx-printer me-1"></i> Cetak</a>
+                          <a class="dropdown-item" href='.route("pembayaran.invoice", $row->no_transaksi).'><i class="bx bx-printer me-1"></i> Cetak</a>
                           <form action="' . route('pembayaran.destroy', $row->id) . '" method="POST">' . csrf_field() . method_field("DELETE") . '<button type="submit" class="btn btn-light" onclick="return confirm(\'Apakah anda yakin ingin menghapus data ini ?\')"><i class="bx bx-trash me-1"></i> Hapus</button></form>
                         </div>
                         </div>';
@@ -344,7 +344,24 @@ class PembayaranController extends Controller
 
     public function invoice($id)
     {
-        $pembayaran = Pembayaran::findOrFail($id);
-        return view('backend.senada.keuangan.invoice_pembayaran.invoice', compact('pembayaran'));
+        // $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran = Pembayaran::where('no_transaksi', $id)->leftjoin('units', 'pembayarans.id_unit', '=', 'units.id')->leftjoin('siswas', 'pembayarans.id_siswa', '=', 'siswas.id')->leftjoin('mappings', 'pembayarans.id_kelas', '=', 'mappings.id')->select('pembayarans.id', 'units.daerah_sekolah', 'siswas.name', 'mappings.kelas', 'pembayarans.tanggal_transaksi', 'pembayarans.jenis_transaksi', 'pembayarans.bulan_transaksi', 'pembayarans.tahun_transaksi', 'pembayarans.keterangan', 'pembayarans.*', 'pembayarans.created_at')->latest()->get();
+
+        //menampilkan daerah
+        // $Units = Unit::find($idUnit);
+        // $nameReg="";
+        // if($Units->daerah_sekolah == 'Bener Meriah'){
+        //     $nameReg = 'Aceh';
+        // }elseif($Units->daerah_sekolah == 'Takengon'){
+        //     $nameReg = 'Aceh';
+        // }else{
+        //     $nameReg = 'Jakarta';
+        // }
+        $daerah = $pembayaran->daerah_sekolah;
+        $tanggal = date('d M Y');
+        $hasil_lokasi_tanggal = $daerah . ", " . $tanggal;
+        dd($hasil_lokasi_tanggal);
+
+        return view('backend.senada.keuangan.invoice_pembayaran.invoice', compact('pembayaran', ''));
     }
 }

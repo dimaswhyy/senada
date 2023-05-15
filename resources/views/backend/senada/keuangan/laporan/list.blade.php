@@ -9,7 +9,7 @@
         <div class="card-header">
             <h5>Laporan</h5>
 
-            <a href="#" class="btn btn-sm btn-primary">Buat Laporan</a>
+            <a href="{{route('cetakForm')}}" class="btn btn-sm btn-primary">Buat Laporan</a>
             <a href="#" class="btn btn-sm btn-primary">Upload Laporan</a>
 
             <div class="card-datatable table">
@@ -23,8 +23,9 @@
                                 <th>Kelas</th>
                                 <th>Jenis</th>
                                 <th>Bulan</th>
-                                <th>Tahun</th>
-                                <th>Keterangan</th>
+                                {{-- <th>Tahun</th> --}}
+                                <th>Ket.</th>
+                                {{-- <th>Aksi</th> --}}
                             </tr>
                         </thead>
                     </table>

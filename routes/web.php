@@ -66,6 +66,7 @@ Route::middleware('auth:unit_account')->group(function(){
     Route::get('pembayaran/invoice/{id}', [PembayaranController::class, 'invoice'])->name('pembayaran.invoice');
     Route::resource('tagihan', TagihanController::class);
     Route::resource('laporan', LaporanController::class);
+    Route::get('/printLaporan', [App\Http\Controllers\Backend\Keuangan\LaporanController::class, 'cetakForm'])->name('cetakForm');
 });
 
 Route::middleware('auth:unit_account', 'role_id=3')->group(function(){

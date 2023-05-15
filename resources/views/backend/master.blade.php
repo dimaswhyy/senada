@@ -778,6 +778,108 @@
                 table.draw();
             });
 
+            // Datatable Rombongan Belajar
+            var table = $('.data-table-laporan').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('laporan.index') }}",
+                    data: function(d) {
+                        d.name = $('.searchName').val(),
+                            d.search = $('input[type="search"]').val()
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'no_transaksi',
+                        name: 'no_transaksi'
+                    },
+                    {
+                        data: 'name',
+                        name: 'siswas.name'
+                    },
+                    {
+                        data: 'kelas',
+                        name: 'mappings.kelas'
+                    },
+                    {
+                        data: 'jenis_transaksi',
+                        name: 'jenis_transaksi'
+                    },
+                    {
+                        data: 'bulan_transaksi',
+                        name: 'bulan_transaksi',
+                        render: function(data, type, row, meta) {
+                            if (data == '1') {
+                                console.log(data);
+                                return 'Januari';
+                            } if (data == '2') {
+                                console.log(data);
+                                return 'Februari';
+                            } if (data == '3') {
+                                console.log(data);
+                                return 'Maret';
+                            } if (data == '4') {
+                                console.log(data);
+                                return 'April';
+                            } if (data == '5') {
+                                console.log(data);
+                                return 'Mei';
+                            } if (data == '6') {
+                                console.log(data);
+                                return 'Juni';
+                            } if (data == '7') {
+                                console.log(data);
+                                return 'Juli';
+                            } if (data == '8') {
+                                console.log(data);
+                                return 'Agustus';
+                            } if (data == '9') {
+                                console.log(data);
+                                return 'September';
+                            } if (data == '10') {
+                                console.log(data);
+                                return 'Oktober';
+                            } if (data == '11') {
+                                console.log(data);
+                                return 'November';
+                            }else {
+                                return 'Desember';
+                            }
+                        },
+                    },
+                    // {
+                    //     data: 'tahun_transaksi',
+                    //     name: 'tahun_transaksi'
+                    // },
+                    {
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        render: function(data, type, row, meta) {
+                            if (data == 'Tunai') {
+                                console.log(data);
+                                return '<span class="badge bg-label-success me-1">Tunai</span>';
+                            } else {
+                                return '<span class="badge bg-label-info me-1">Transfer</span>';
+                            }
+                        }
+                    },
+                    // {
+                    //     data: 'action',
+                    //     name: 'action',
+                    //     orderable: false,
+                    //     searchable: false
+                    // },
+                ]
+            });
+
+            $(".searchName").keyup(function() {
+                table.draw();
+            });
+
         });
     </script>
     @include('sweetalert::alert')

@@ -128,16 +128,17 @@
 
 
           <!-- Place this tag where you want the button to render. -->
-          <li class="nav-item lh-1 me-3">
+          {{-- <li class="nav-item lh-1 me-3">
             <a class="github-button" href="https://github.com/themeselection/sneat-html-admin-template-free" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
-          </li>
+
+          </li> --}}
 
 
 
           <!-- User -->
-          <div class="class">
+          {{-- <div class="class">
             <a href="{{route('login')}}" class="btn btn-primary">Masuk</a>
-          </div>
+          </div> --}}
           {{-- <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
@@ -218,10 +219,32 @@
 
           <div class="container-xxl flex-grow-1 container-p-y">
 
+{{-- Split Area --}}
+<div class="col-lg-12 md-4 order-0">
+    <div class="row">
+        <div class="col-6 mb-4">
+            <br><br><br><br><br><br>
+            <h1 style="color:#696CFF;"><b>SENADA</b></h1>
+            <h3 >Sistem Informasi Akademik Pendidikan Al Manar</h3>
+            <p>Engkau berharap sukses berhasil namun tak menempuh jalannya. Ketahuilah, tak ada kapal yang bisa berlayar di atas daratan kering.</p>
 
+            <div class="class">
+                <a href="{{route('login')}}" class="btn btn-primary">Masuk Sekarang</a>
+            </div>
+        </div>
+
+        <div class="col-6 mb-4">
+            <center>
+            <img src="../assets/backend/img/backgrounds/sch.png" class="img-fluid" alt="School Vector" data-app-light-img="layouts/layout-without-menu-light.png" data-app-dark-img="layouts/layout-without-menu-dark.png" width="500">
+            </center>
+        </div>
+
+
+    </div>
+</div>
 
 <!-- Layout Demo -->
-<div class="layout-demo-wrapper">
+{{-- <div class="layout-demo-wrapper">
   <div class="layout-demo-placeholder">
 
     <img src="../assets/img/layouts/layout-without-menu-light.png" class="img-fluid" alt="Layout without menu" data-app-light-img="layouts/layout-without-menu-light.png" data-app-dark-img="layouts/layout-without-menu-dark.png">
@@ -231,10 +254,10 @@
     <h4>Layout without Menu (Navigation)</h4>
     <button class="btn btn-primary" type="button" onclick="history.back()">Go Back</button>
   </div>
-</div>
+</div> --}}
 <!--/ Layout Demo -->
 
-<div class="card">
+{{-- <div class="card">
     <h5 class="card-header">Table Basic</h5>
     <div class="table-responsive text-nowrap">
       <table class="table">
@@ -278,7 +301,7 @@
         </tbody>
     </table>
   </div>
-</div>
+</div> --}}
 
           </div>
           <!-- / Content -->
@@ -299,17 +322,6 @@
         <a href="https://almanar.sch.id" target="_blank" class="footer-link fw-bolder">Sistem Infromasi Akademik Pendidikan Al Manar</a>
         1.0
     </div>
-    <div>
-
-      <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-      <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-      <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
-
-      <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
-
-
-    </div>
   </div>
 </footer>
 <!-- / Footer -->
@@ -326,13 +338,6 @@
 
   </div>
   <!-- / Layout wrapper -->
-
-
-
-
-  <div class="buy-now">
-    <a href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/" target="_blank" class="btn btn-danger btn-buy-now">Upgrade to Pro</a>
-  </div>
 
 
   <!-- Core JS -->
